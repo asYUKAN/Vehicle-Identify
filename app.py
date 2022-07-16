@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import pytesseract as pt
 import cv2
+import numpy as np
 from PIL import Image
 def save_uploadedfile(uploadedfile):
         with open(os.path.join("tempDir",uploadedfile.name),"wb") as f:
@@ -9,8 +10,10 @@ def save_uploadedfile(uploadedfile):
         return st.success("Image Loaded")
 uploaded_file=st.file_uploader('Choose Image file',type=['jpg','jpeg','png'])
 if uploaded_file is not None:
-    save_uploadedfile(uploaded_file)
-    img_object = cv2.imread(os.path.join("tempDir",uploaded_file.name))
+    #save_uploadedfile(uploaded_file)
+    #img_object = cv2.imread(os.path.join(uploaded_file.name))
+    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+    img_object = cv2.imdecode(file_bytes, 1)
     gray_image = cv2.cvtColor(img_object, cv2.COLOR_BGR2GRAY)
     gray_image = cv2.bilateralFilter(gray_image, 11, 17, 17) 
     edged = cv2.Canny(gray_image, 30, 200) 

@@ -2,3 +2,4 @@ streamlit==1.10.0
 pytesseract==0.3.8
 opencv-contrib-python==4.5.3.56
 opencv-python==4.5.3.56
+numpy
